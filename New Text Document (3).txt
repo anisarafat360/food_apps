@@ -1,0 +1,176 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
+  TabController tabController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    tabController = TabController(vsync:this, length:4);
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: ListView(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(15.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Icon(
+                  Icons.menu,color: Colors.black,
+                ),
+                Container(
+                  width: 50.0,
+                  height: 50.0,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: AssetImage('images/tuxedo.png'),
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 15.0),
+            child: Text(
+              'SEARCH FOR',
+              style: TextStyle(
+                fontSize: 30.0,fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 15.0),
+            child: Text(
+              'RECIPES',
+              style: TextStyle(
+                fontSize: 30.0,fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          SizedBox(height: 20.0),
+          Padding(
+            padding: EdgeInsets.only(left: 20.0,right: 20.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.0),
+                color: Colors.grey.withOpacity(0.5),
+              ),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'SEARCH',
+                  border: InputBorder.none,
+                  prefixIcon: Icon(Icons.search, color: Colors.grey.withOpacity(0.6),),
+                ),
+
+              ),
+            ),
+          ),
+          SizedBox(height: 10.0),
+          Padding(
+            padding: EdgeInsets.only(left: 15.0),
+            child: Text(
+              'Recomended',
+              style: TextStyle(
+                fontSize: 20.0,fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          SizedBox(height: 25.0),
+          Container(
+            height: 200.0,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: <Widget>[
+                _builListItem('HamBurger','images/burger.png','21',Color(0xFFFFEAC5),Color(0xDD994C)),
+                _builListItem('HamBurger','images/cheese.png','21',Color(0xFFFFEAC5),Color(0xDD994C)),
+                _builListItem('HamBurger','images/popcorn.png','21',Color(0xFFFFEAC5),Color(0xDD994C)),
+                _builListItem('HamBurger','images/taco.png','21',Color(0xFFFFEAC5),Color(0xDD994C)),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+_builListItem(String food,String imapath,String price,Color bgColor,Color textColor){
+  return Padding(
+    padding: EdgeInsets.only(left:15.0),
+    child: Container(
+      height: 175.0,
+      width: 150.0,
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(15.0),
+
+
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Hero(
+            tag: food,
+            child: Container(
+              height: 75.0,
+              width: 75.0,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: Image.asset(imapath,height: 50.0,width: 50.0),
+              ),
+            ),
+          ),
+          SizedBox(height: 20.0),
+          Text(
+            food,
+            style: TextStyle(
+              fontSize: 20.0,
+              color: textColor,
+            ),
+          ),
+          Text(
+            '\$'+price,
+            style: TextStyle(
+              fontSize: 20.0,
+              color: textColor,
+            ),
+          ),
+          SizedBox(height:20.0),
+          Padding(
+            padding: EdgeInsets.only(left: 15.0),
+            child: TabBar(
+              controller: tabController,
+              indicatorColor: Colors.transparent,
+              labelColor: Colors.black,
+              isScrollable: true,
+              unselectedLabelColor: Colors.grey.withOpacity(0.5),
+              tabs: <Widget>[
+                Tab(child: Text('Featured')),
+                Tab(child: Text('Combo')),
+                Tab(child: Text('Favorites')),
+                Tab(child: Text('Recommended')),
+              ],
+            ),
+          )
+        ],
+      ),
+    ),
+  );
+}
